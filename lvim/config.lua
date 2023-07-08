@@ -10,14 +10,12 @@ reload "user.autocommands"
 reload "user.chatgpt"
 
 
--- general 
--- lvim.log.level = "warn" l
 -- vim.format_on_save.enabled = false
 lvim.colorscheme = "tokyonight-moon"
 lvim.transparent_window = true
 vim.opt.clipboard = "unnamedplus"
 
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+-- Please start from :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
