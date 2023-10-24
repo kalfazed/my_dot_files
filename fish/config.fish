@@ -31,14 +31,18 @@ alias ls     "ls -p -G"
 alias la     "ls -A"
 alias sleep  "sudo systemctl suspend"
 alias ncu    "sudo /usr/local/cuda/bin/ncu"
-alias make   "bear -- make -j64"
+alias bmake  "bear -- make -j64"
+alias make   "make -j64"
 alias nsys   "sudo /usr/local/cuda/bin/nsys"
 alias obs    "flatpak run com.obsproject.Studio"
 alias gt     "git log --graph --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Creset%x09 %C(cyan ul)%an%Creset %x09%C(auto)%s %d'"
+alias trtpy  "python -m trtpy"
+alias dsort  "du -sh -- *  | sort -rh"
+alias lm     "df -hl -x tmpfs"
 
 # additional alias for exa
 if type -q exa
-  alias ll "exa --icons --long --no-user"
+  alias ll "exa --icons --long --no-user --no-time"
   alias lla "ll -a"
 end
 
@@ -57,8 +61,8 @@ set -gx PATH bin $PATH
 set -gx PATH ~/.local/bin $PATH
 set -gx PATH /usr/local/bin $PATH
 set -gx PATH /usr/local/cuda/bin $PATH
-set -gx PATH /home/kalfazed/packages/TensorRT-8.5.1.7/bin $PATH
-set -gx LD_LIBRARY_PATH /home/kalfazed/packages/TensorRT-8.5.1.7/lib $LD_LIBRARY_PATH
+set -gx PATH /home/kalfazed/packages/TensorRT-8.6.1.6/bin $PATH
+set -gx LD_LIBRARY_PATH /home/kalfazed/packages/TensorRT-8.6.1.6/lib $LD_LIBRARY_PATH
 set -gx LD_LIBRARY_PATH /usr/local/cuda/lib64 $LD_LIBRARY_PATH
 set -gx LD_LIBRARY_PATH /usr/local/lib $LD_LIBRARY_PATH
 set -gx PKG_CONFIG_PATH /usr/local/lib/pkgconfig $PKG_CONFIG_PATH
@@ -74,7 +78,17 @@ set -gx PATH $GOPATH/bin $PATH
 set -gx OPENAI_API_KEY xxx $OPENAI_API_KEY
 
 # cuda lazy loading
-set -g CUDA_MODULE_LOADING LAZY 
+set -gx CUDA_MODULE_LOADING LAZY 
+
+# xset display
+# set -gx DISPLAY 0
+
+# set keyboard repeat spee
+# xset r rate 190 50
+xset r rate 210 60
+
+# change Caps Lock to shift_L
+# xmodmap -e "keycode 66 = Shift_L"
 
 set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 if test -f $LOCAL_CONFIG

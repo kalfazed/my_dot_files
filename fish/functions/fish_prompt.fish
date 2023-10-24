@@ -1,4 +1,15 @@
 function fish_prompt --description 'Write out the prompt'
+    set BLACK   '\033[0;30m'
+    set RED     '\033[0;31m'
+    set GREEN   '\033[0;32m'
+    set YELLOW  '\033[0;33m'
+    set BLUE    '\033[0;34m'
+    set PURPLE  '\033[0;35m'
+    set CYAN    '\033[0;36m'
+    set WHITE   '\033[0;37m'
+    set CLEAR   '\033[0m'
+    set HOST    '[station]'
+
     set -l last_pipestatus $pipestatus
     set -lx __fish_last_status $status # Export for __fish_print_pipestatus.
 
@@ -46,7 +57,7 @@ function fish_prompt --description 'Write out the prompt'
 
     # PWD
     set_color $color_cwd
-    echo -n "[station]"(prompt_pwd)
+    echo -en "$YELLOW$HOST$CLEAR"$PURPLE(prompt_pwd)$CLEAR
     set_color normal
 
     printf '%s ' (fish_vcs_prompt)
