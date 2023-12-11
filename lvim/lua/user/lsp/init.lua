@@ -1,4 +1,4 @@
-lvim.lsp.diagnostics.virtual_text = false
+vim.diagnostic.config({virtual_text=false})
 
 -- generic LSP settings
 
@@ -10,7 +10,7 @@ lvim.lsp.diagnostics.virtual_text = false
 -- -- change UI setting of `LspInstallInfo`
 -- -- see <https://github.com/williamboman/nvim-lsp-installer#default-configuration>
 -- lvim.lsp.installer.setup.ui.check_outdated_servers_on_open = false
--- lvim.lsp.installer.setup.ui.border = "rounded"
+lvim.lsp.installer.setup.ui.border = "rounded"
 -- lvim.lsp.installer.setup.ui.keymaps = {
 --     uninstall_server = "d",
 --     toggle_server_expand = "o",
@@ -42,76 +42,9 @@ lvim.lsp.diagnostics.virtual_text = false
 -- end
 
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
-  { command = "black", filetypes = { "python" } },
-  { command = "isort", filetypes = { "python" } },
-  {
-    -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-    command = "prettier",
-    ---@usage arguments to pass to the formatter
-    -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-    extra_args = { "--print-with", "100" },
-    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-    filetypes = { "typescript", "typescriptreact" },
-  },
-}
 
 -- -- set additional linters
-local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {
-  -- { command = "flake8", filetypes = { "python" } },
-  {
-    -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-    command = "shellcheck",
-    ---@usage arguments to pass to the formatter
-    -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-    extra_args = { "--severity", "warning" },
-  },
-  {
-    command = "codespell",
-    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-    filetypes = { "javascript", "python" },
-  },
-}
 
 require("lvim.lsp.manager").setup("emmet_ls")
+require('nvim-dap-projects').search_project_config()
 
-
--- Builtin DAP configuration for C/C++
-lvim.builtin.dap.on_config_done = function(dap)
-  dap.adapters.codelldb = {
-    type = "server",
-    port = "${port}",
-    executable = {
-      -- provide the absolute path for `codelldb` command if not using the one installed using `mason.nvim`
-      command = "codelldb",
-      args = { "--port", "${port}" },
-
-      -- On windows you may have to uncomment this:
-      -- detached = false,
-    },
-  }
-
-  dap.configurations.cpp = {
-    {
-      name = "Launch file",
-      type = "codelldb",
-      request = "launch",
-      program = function()
-        local path
-        vim.ui.input({ prompt = "Path to executable: ", default = vim.loop.cwd() .. "/" }, function(input)
-          path = input
-        end)
-        vim.cmd [[redraw]]
-        return path
-      end,
-      cwd = "${workspaceFolder}",
-      stopOnEntry = false,
-    },
-  }
-
-  dap.configurations.c = dap.configurations.cpp
-end
-
--- require('nvim-dap-projects').search_project_config()

@@ -1,21 +1,20 @@
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
+lvim.keys.insert_mode["jj"]    = "<Esc>"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.insert_mode["jj"] = "<Esc>"
 lvim.keys.normal_mode["<C-b>"] = ":DapToggleBreakpoint<CR>"
 lvim.keys.normal_mode["<C-c>"] = ":DapContinue<CR>"
 lvim.keys.normal_mode["<C-p>"] = ":SymbolsOutline<CR>"
--- lvim.keys.normal_mode["<Tab>"] = ":bnext<CR>"
--- lvim.keys.normal_mode["<S-Tab>"] = ":bprev<CR>"
+lvim.keys.normal_mode["<C-i>"] = ":DapStepInto<CR>"
+lvim.keys.normal_mode["<C-n>"] = ":DapStepOver<CR>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- unmap a default keymapping
-vim.keymap.del("n", "<C-Y>")
--- override a default keymapping
--- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
---
+-- vim.keymap.del("n", "<C-Y>")
+
 -- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["c"] = { ":qa<CR>", "Quit all" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",

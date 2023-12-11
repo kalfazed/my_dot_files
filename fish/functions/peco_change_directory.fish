@@ -6,6 +6,8 @@ function _peco_change_directory
   end
   if [ $foo ]
     builtin cd $foo
+    echo ' '
+    ll
     commandline -r ''
     commandline -f repaint
   else
@@ -15,8 +17,8 @@ end
 
 function peco_change_directory
   begin
-    echo $HOME/.config
+    # echo $HOME/.config
     ghq list -p
-    ls -ad */|perl -pe "s#^#$PWD/#"|grep -v \.git
-  end | sed -e 's/\/$//' | awk '!a[$0]++' | _peco_change_directory $argv
+    # ls -ad */|perl -pe "s#^#$PWD/#"|grep -v \.git
+  end | sed -e 's/\/$//' | awk '!a[$0]++' | _peco_change_directory $argv 
 end

@@ -39,12 +39,12 @@ alias gt     "git log --graph --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Cres
 alias trtpy  "python -m trtpy"
 alias dsort  "du -sh -- *  | sort -rh"
 alias lm     "df -hl -x tmpfs"
+alias pip    "python -m pip"
+alias wm     "wmctrl -r 'Alacritty' -b toggle,fullscreen"
 
 # additional alias for exa
-if type -q exa
-  alias ll "exa --icons --long --no-user --no-time"
-  alias lla "ll -a"
-end
+alias ll     "exa --icons --long --no-user --no-time --git"
+alias lla    "ll -a"
 
 # set customized neovim as default editor
 command -qv lvim && alias vim lvim
@@ -56,11 +56,17 @@ function cd
   standard_cd $argv; and ll
 end
 
+# get the count of files
+function llc
+  find $argv -type f | xargs ls | wc -l
+end
+
 # Please modify your path here
 set -gx PATH bin $PATH
 set -gx PATH ~/.local/bin $PATH
 set -gx PATH /usr/local/bin $PATH
 set -gx PATH /usr/local/cuda/bin $PATH
+set -gx PATH ~/.cargo/bin $PATH
 set -gx PATH /home/kalfazed/packages/TensorRT-8.6.1.6/bin $PATH
 set -gx LD_LIBRARY_PATH /home/kalfazed/packages/TensorRT-8.6.1.6/lib $LD_LIBRARY_PATH
 set -gx LD_LIBRARY_PATH /usr/local/cuda/lib64 $LD_LIBRARY_PATH
@@ -95,10 +101,19 @@ if test -f $LOCAL_CONFIG
   source $LOCAL_CONFIG
 end
 
+# peco + ghq
+set -g GHQ_SELECTOR peco
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 if test -f /home/kalfazed/miniconda3/bin/conda
     eval /home/kalfazed/miniconda3/bin/conda "shell.fish" "hook" $argv | source
+else
+    if test -f "/home/kalfazed/miniconda3/etc/fish/conf.d/conda.fish"
+        . "/home/kalfazed/miniconda3/etc/fish/conf.d/conda.fish"
+    else
+        set -x PATH "/home/kalfazed/miniconda3/bin" $PATH
+    end
 end
 # <<< conda initialize <<<
 

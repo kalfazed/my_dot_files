@@ -23,7 +23,7 @@
   -- will set to true when fully tested, set to false will use whichever side has more space
   -- this setting will be helpful if you do not want the PUM and floating win overlap
 
-  floating_window_off_x = 1, -- adjust float windows x position. 
+  floating_window_off_x = 200, -- adjust float windows x position. 
                              -- can be either a number or function
   floating_window_off_y = 0, -- adjust float windows y position. e.g -2 move window up 2 lines; 2 move down 2 lines
                               -- can be either number or function, see examples
@@ -43,7 +43,7 @@
 
   auto_close_after = nil, -- autoclose signature float win after x sec, disabled if nil.
   extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
-  zindex = 200, -- by default it will be on top of all floating windows, set to <= 50 send it to bottom
+  zindex = 20, -- by default it will be on top of all floating windows, set to <= 50 send it to bottom
 
   padding = '', -- character to pad on left and right of signature can be ' ', or '|'  etc
 

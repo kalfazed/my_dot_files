@@ -1,0 +1,158 @@
+{
+    /*
+        *************************************************************
+        *************************SSH related*************************
+        *************************************************************
+    */
+    "remote.SSH.remotePlatform": {
+        "192.168.11.18": "linux",
+        "192.168.11.19": "linux",
+        "192.168.11.2": "linux",
+        "brain": "linux",
+        "xavier": "linux",
+        "172.25.217.230": "linux",
+        "DL_Box": "linux",
+        "nano": "linux",
+        "qualcomm": "linux",
+        "dlbox-docker": "linux",
+        "a1001": "linux",
+        "dlbox": "linux",
+        "waseda": "linux",
+        "station-container": "linux",
+        "station": "linux",
+        "station-remote": "linux",
+        "a401": "linux"
+    },
+
+    /*
+        *************************************************************
+        ***********************theme related*************************
+        *************************************************************
+    */
+    "window.titleBarStyle": "custom",
+    "window.menuBarVisibility": "toggle",
+    "window.commandCenter": false,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Community Material Theme Ocean",
+    "debug.console.fontSize": 13,
+    "scm.inputFontSize": 13,
+    "markdown.preview.fontSize": 13,
+    "zenMode.hideLineNumbers": false,
+    "zenMode.centerLayout": false,
+    "zenMode.hideStatusBar": false,
+    "search.showLineNumbers": true,
+    "notebook.lineNumbers": "on",
+
+    /*
+        *************************************************************
+        *********************terminal related************************
+        *************************************************************
+    */
+    "terminal.integrated.gpuAcceleration": "off",
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.fontFamily": "Hack Nerd Font",
+    "terminal.integrated.fontWeight": "normal",
+    "terminal.integrated.fontSize": 13,
+    "terminal.integrated.defaultProfile.linux": "fish",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.profiles.linux": {
+        "bash": { "path": "bash", "icon": "terminal-bash" },
+        "zsh":  { "path": "zsh" },
+        "fish": {"path": "fish" },
+        "tmux": {"path": "tmux", "icon": "terminal-tmux" },
+        "pwsh": { "path": "pwsh", "icon": "terminal-powershell"}
+    },
+
+    /*
+        *************************************************************
+        *********************editor related**************************
+        *************************************************************
+    */
+    "editor.fontFamily": "Hack Nerd Font",
+    "editor.fontWeight": "normal",
+    "editor.fontSize": 13,
+    "editor.lineHeight": 16,
+    "editor.renderLineHighlight": "all",
+    "editor.cursorBlinking": "smooth",
+    "editor.lineNumbers": "on",
+    "editor.tokenColorCustomizations": {
+        "comments": {
+            "foreground": "#1c5664",
+            "fontStyle": ""
+        },
+    },
+
+    /*
+        *************************************************************
+        ************************vim related**************************
+        *************************************************************
+    */
+    "vim.leader": "<space>",
+    "vim.highlightedyank.color": "rgba(250, 240, 170, 0.5)",
+    "vim.hlsearch": true,
+    "vim.visualstar": true,
+    "vim.useCtrlKeys": true,
+    "vim.easymotion": true,
+    "vim.useSystemClipboard": true,
+    "vim.normalModeKeyBindingsNonRecursive": [
+        { "before": ["J"],             "after": ["1", "0", "j"] }, // move down 10 lines
+        { "before": ["K"],             "after": ["1", "0", "k"] }, // move up 10 lines
+        { "before": ["H"],             "after": ["0"] },           // jump to the head of line
+        { "before": ["L"],             "after": ["$"] },           // jump to the end of line
+        { "before": ["n"],             "after": ["n", "z", "z"] }, // jump to the center of current tab
+        { "before": ["*"],             "after": ["*", "z", "z"] }, // move current line to the center of current tab
+        { "before": ["<Leader>", "h"], "after": ["<C-w>", "h"] },  // jump to left window
+        { "before": ["<Leader>", "j"], "after": ["<C-w>", "j"] },  // jump to bottom window
+        { "before": ["<Leader>", "k"], "after": ["<C-w>", "k"] },  // jump to top windows
+        { "before": ["<Leader>", "l"], "after": ["<C-w>", "l"] },  // jump to right window
+        { "before": ["<Leader>", "]"], "after": ["g", "t"] },      // jump to right tab
+        { "before": ["<Leader>", "["], "after": ["g", "T"] },      // jump to left tab
+        { "before": ["<Leader>", "o"], "after": ["o", "<ESC>"] },  // insert a blank line
+        { "before": ["<Leader>", "q"], "commands": [":q!"] },      // close current tab
+        { "before": ["<Leader>", "Q"], "commands": [":qa!"] },     // close all tabs
+        { "before": ["<Leader>", "w"], "commands": [":wa"] },      // save all
+        { "before": ["u"],             "commands": ["undo"] },     // undo
+        { "before": ["<C-r>"],         "commands": ["redo"] },     // redo
+        { "before": ["<Leader>", "s"], "commands": [":split"] },   // split window horizontal
+        { "before": ["<Leader>", "v"], "commands": [":vsplit"] },  // split window vertical
+        { "before": [">"],             "commands": ["editor.action.indentLines"] },      // move indent right
+        { "before": ["<"],             "commands": ["editor.action.outdentLines"] },     // move indent left
+        { "before": ["<Leader>", "/"], "commands": ["editor.action.commentLine" ] },     // comment out and in
+        { "before": ["<Leader>", ":"], "commands": ["workbench.action.showCommands"] },  // show all commands
+        { "before": ["<Leader>", ";"], "commands": ["workbench.action.quickOpen"] },     // search file
+        { "before": ["["],             "commands": ["editor.action.peekDefinition"] },   // show definition
+        { "before": ["]"],             "commands": ["C_Cpp.PeekDeclaration"], "when": ["editorLangId == c"] }, // show declaration(only supported in C)
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        { "before": [">"],             "commands": ["editor.action.indentLines"] },      // move indent right (multiple lines)
+        { "before": ["<"],             "commands": ["editor.action.outdentLines"] },     // move indent left (multiple lines)
+        { "before": ["<Leader>", "/"], "commands": ["editor.action.commentLine" ] },     // comment out and in (multiple lines)
+    ],
+    "vim.insertModeKeyBindings": [
+        { "before": ["j", "j"],        "after": ["<Esc>"] },        // faster switch between insert mode and normal mode
+    ],
+
+    /*
+        *************************************************************
+        *******************pcviewer related**************************
+        *************************************************************
+    */
+    "pcviewer.backgroundColor": "#000000",
+    "pcviewer.displayGridHelper": false,
+    "pcviewer.viewPoint": true,
+    "pcviewer.rotateCoordinate": [-90, 90, 0],
+
+    /*
+        *************************************************************
+        ***************************others****************************
+        *************************************************************
+    */
+    "cmake.configureOnOpen": true,
+    "cmake.showOptionsMovedNotification": false,
+    "[python]": {"editor.formatOnType": true},
+    "security.workspace.trust.untrustedFiles": "newWindow",
+    "breadcrumbs.enabled": false,
+    "git.openRepositoryInParentFolders": "never",
+    "workbench.startupEditor": "welcomePage",
+    "clock.dateFormat": "hh:MM:ss TT"
+}
