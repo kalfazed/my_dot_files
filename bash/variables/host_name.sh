@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Hostname
-HOST=['$(whoami)']
+HOST=[$(whoami)]
