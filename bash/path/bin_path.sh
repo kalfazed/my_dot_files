@@ -1,7 +1,18 @@
 #!/bin/bash
 
+add_path() {
+    local new_path="$1"
+    
+    # Check if the new path is not already in the existing PATH
+    if [[ ":$PATH:" != *":$new_path:"* ]]; then
+        PATH="${PATH}:${new_path}"
+        export PATH
+    fi
+}
+
+
 # Modify your path here
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/cuda/bin:$PATH
-export PATH=~/.local/bin:$PATH
-export PATH=~/.config/bash/packages/bin:$PATH
+add_path /usr/local/bin
+add_path /usr/local/cuda/bin
+add_path ~/.local/bin
+add_path ~/.config/bash/packages/bin
