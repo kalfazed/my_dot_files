@@ -23,6 +23,7 @@ source_files "$DIR/functions"
 source_files "$DIR/keymaps"
 #source_files "$DIR/path"
 source_files "$DIR/packages"
+source_files "$DIR/packages/z"
 
 export LSCOLORS=gxfxcxdxbxegedabagacad
 export TERM=xterm-256color
@@ -35,4 +36,3 @@ export CUDA_MODULE_LOADING=LAZY
 
 # Set custom bash prompt
 PS1='$(bash_prompt)'
-

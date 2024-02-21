@@ -4,7 +4,16 @@ Please select the packages you want to install. It is very easy
 to install my dot files in your environment. In each directory, 
 I put a `install.sh` for the quick installation. Please enjoy!!
 
-Here are some highlights for each item:
+## Recommandation
+Before the installation, I highly recommand to use [NerdFont](https://www.nerdfonts.com/) 
+as the default font in your terminal or vscode. 
+Nerd Fonts is a project that takes existing programming fonts and
+enhances them with a variety of additional glyphs and icons 
+commonly used in programming, development, and computing in general. There are a number of fonts to select in NerdFont. Among all of them, I use `Hack Nerd Font`, you can download from [here](https://www.nerdfonts.com/font-downloads).
+
+
+## Intallation
+Here are some highlights and installation for each item:
 ## bash
 ```shell
 bash bash/install.sh
@@ -16,6 +25,7 @@ bash bash/install.sh
 - Custmized prompt name, which can help you to quickly identify which server are you running. It is convinient when you have multiple server to ssh, including docker container.
 - Show icons for each file type and directory
 - Show git branch and status in prompt.
+- use `z` to jump to a frequently access directory quickly. 
 
 ## fish
 ```shell
