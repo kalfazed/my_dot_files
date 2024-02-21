@@ -8,7 +8,6 @@ function fish_prompt --description 'Write out the prompt'
     set CYAN    '\033[0;36m'
     set WHITE   '\033[0;37m'
     set CLEAR   '\033[0m'
-    set HOST    '[station]'
 
     set -l last_pipestatus $pipestatus
     set -lx __fish_last_status $status # Export for __fish_print_pipestatus.
