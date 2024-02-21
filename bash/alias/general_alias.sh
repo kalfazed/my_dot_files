@@ -11,6 +11,7 @@ alias lm='df -hl -x tmpfs'
 alias pip='python -m pip'
 alias ll='exa --icons --long --no-user --no-time'
 alias lla='ll -a'
+alias tmux='tmux -u'
 
 # # Alias vim to neovim or lvim
 if [ "$(type -t lvim)" == "file" ]; then
