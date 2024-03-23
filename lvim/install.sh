@@ -15,7 +15,7 @@ sudo apt-get install -y npm
 sudo apt-get install -y codespell flake8 black isort
 
 # install lunarvim-1.3
-LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
+LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh) -y
 cp -r * ~/.config/lvim/
 
 echo "Installation done. For additional install, please refer to README"
