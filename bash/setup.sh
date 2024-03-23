@@ -36,3 +36,17 @@ export CUDA_MODULE_LOADING=LAZY
 
 # Set custom bash prompt
 PS1='$(bash_prompt)'
+
+# Don't overwrite the history file, append to it instead
+shopt -s histappend
+
+# When the shell exits, append to the history file instead of overwriting it
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+# Load the history file and enable command history
+HISTFILE=~/.bash_history
+HISTSIZE=10000
+HISTFILESIZE=10000
+
+# Make commands immediately available in history
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
