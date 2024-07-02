@@ -22,4 +22,7 @@ sudo apt-get install -y codespell flake8 black isort
 LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh) -y
 cp -r * ~/.config/lvim/
 
+# global clangd setting
+cp -r ./clangd ~/.config/
+
 echo "Installation done. For additional install, please refer to README"
