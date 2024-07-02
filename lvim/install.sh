@@ -1,11 +1,15 @@
 #!/usr/bin/bash
+# installs nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+# download and install Node.js (you may need to restart the terminal)
+nvm install 22
 
 # install latest cargo and rustc
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source "$HOME/.cargo/env"
 
 # install neovim-0.9.0
-sudo cp -r packages/nvim-0.9.0/* /usr/local/
+sudo cp -r packages/nvim-0.9.1/* /usr/local/
 
 # install npm
 sudo apt-get update
