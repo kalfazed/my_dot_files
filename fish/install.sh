@@ -1,8 +1,9 @@
 #!/usr/bin/bash
 
-sudo apt-get install -y fish peco
+sudo apt-get install -y fish peco curl
 mkdir -p ~/.config/fish
 cp -r * ~/.config/fish
+sudo cp -r ./packages/bin/* /usr/local/bin
 
 # Set hostname (default $(whoami)
 echo "Please input your hostname: "
