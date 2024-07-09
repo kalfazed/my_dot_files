@@ -4,6 +4,9 @@ Please select the packages you want to install. It is very easy
 to install my dot files in your environment. In each directory, 
 I put a `install.sh` for the quick installation. Please enjoy!!
 
+## Demo
+![Demo](./others/demo/demo.gif)
+
 ## Recommandation
 Before the installation, I highly recommand to use [NerdFont](https://www.nerdfonts.com/) 
 as the default font in your terminal or vscode. 
