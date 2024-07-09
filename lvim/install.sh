@@ -19,7 +19,7 @@ sudo apt-get install -y npm python3 python-is-python3 pip
 sudo apt-get install -y codespell flake8 black isort
 
 # install lunarvim-1.3
-LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh) -y
+LV_BRANCH='release-1.3/neovim-0.9' bash lvim-install -y
 cp -r * ~/.config/lvim/
 
 # global clangd setting
