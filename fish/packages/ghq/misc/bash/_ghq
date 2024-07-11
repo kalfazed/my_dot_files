@@ -1,0 +1,20 @@
+function _ghq () {
+  local cur prev words cword
+  _init_completion || return
+
+  case $cword in
+  1)
+    COMPREPLY=( $(compgen -W "get list" -- $cur) );;
+  2)
+    case $prev in
+    get)
+  	  COMPREPLY=( $(compgen -W "$(ghq list --unique)" -- $cur) );;
+    list)
+  	  COMPREPLY=( $(compgen -W "$(ghq list)" -- $cur) );;
+    esac;;
+  *)
+    COMPREPLY=( $(compgen -W "$(ls)" -- $cur) );;
+  esac
+}
+
+complete -F _ghq ghq
