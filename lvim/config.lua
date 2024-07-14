@@ -10,6 +10,7 @@ reload "user.signature"
 reload "user.outlines"
 reload "user.autocommands"
 reload "user.chatgpt"
+reload "user.copilot"
 
 
 -- general 
