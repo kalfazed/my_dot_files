@@ -13,7 +13,7 @@ sudo cp -r packages/nvim-0.9.1/* /usr/local/
 
 # install npm
 sudo apt-get update
-sudo apt-get install -y npm python3 python-is-python3 pip
+sudo apt-get install -y npm python3 python-is-python3 pip shellcheck
 
 # install npm
 sudo apt-get install -y codespell flake8 black isort
