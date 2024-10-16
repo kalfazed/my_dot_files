@@ -3,6 +3,7 @@
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # download and install Node.js (you may need to restart the terminal)
 nvm install 22
+nvm use 22 # Active the latest version
 
 # install latest cargo and rustc
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh

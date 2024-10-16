@@ -19,12 +19,28 @@ set fish_greeting "welcome back!!"
 # color setting
 set -gx TERM xterm-256color
 
+# Global color variables
+set -g RED (set_color red)
+set -g REDB (set_color --bold red)
+set -g GREEN (set_color green)
+set -g GREENB (set_color --bold green)
+set -g YELLOW (set_color yellow)
+set -g YELLOWB (set_color --bold yellow)
+set -g BLUE (set_color blue)
+set -g BLUEB (set_color --bold blue)
+set -g PURPLE (set_color purple)
+set -g PURPLEB (set_color --bold purple)
+set -g CYAN (set_color cyan)
+set -g CYANB (set_color --bold cyan)
+set -g CLEAR (set_color normal) 
+
 # theme
 set -g theme_hide_hostname no
 set -g theme_color_scheme terminal-dark
 set -g fish_prompt_pwd_dir_length 1
 set -g theme_display_user yes
 set -g theme_hostname always
+
 
 # aliases
 alias ls     "ls -p -G"
@@ -55,10 +71,6 @@ function cd
   standard_cd $argv; and ll
 end
 
-# get the count of files
-function llc
-  find $argv -type f | xargs ls | wc -l
-end
 
 # Please modify your path here
 set -gx PATH bin $PATH
@@ -66,8 +78,10 @@ set -gx PATH ~/.local/bin $PATH
 set -gx PATH /usr/local/bin $PATH
 set -gx PATH /usr/local/cuda/bin $PATH
 set -gx PATH ~/.cargo/bin $PATH
+set -gx PATH ~/Packages/TensorRT-8.6.1.6/bin $PATH
 set -gx LD_LIBRARY_PATH /usr/local/cuda/lib64 $LD_LIBRARY_PATH
 set -gx LD_LIBRARY_PATH /usr/local/lib $LD_LIBRARY_PATH
+set -gx LD_LIBRARY_PATH ~/Packages/TensorRT-8.6.1.6/lib $LD_LIBRARY_PATH
 set -gx PKG_CONFIG_PATH /usr/local/lib/pkgconfig $PKG_CONFIG_PATH
 
 # NodeJS
@@ -100,3 +114,18 @@ end
 
 # peco + ghq
 set -g GHQ_SELECTOR peco
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+if test -f /home/kalfazed/miniconda3/bin/conda
+    eval /home/kalfazed/miniconda3/bin/conda "shell.fish" "hook" $argv | source
+else
+    if test -f "/home/kalfazed/miniconda3/etc/fish/conf.d/conda.fish"
+        . "/home/kalfazed/miniconda3/etc/fish/conf.d/conda.fish"
+    else
+        set -x PATH "/home/kalfazed/miniconda3/bin" $PATH
+    end
+end
+# <<< conda initialize <<<
+
+conda activate fs-perc-dataset
