@@ -78,10 +78,8 @@ set -gx PATH ~/.local/bin $PATH
 set -gx PATH /usr/local/bin $PATH
 set -gx PATH /usr/local/cuda/bin $PATH
 set -gx PATH ~/.cargo/bin $PATH
-set -gx PATH ~/Packages/TensorRT-8.6.1.6/bin $PATH
 set -gx LD_LIBRARY_PATH /usr/local/cuda/lib64 $LD_LIBRARY_PATH
 set -gx LD_LIBRARY_PATH /usr/local/lib $LD_LIBRARY_PATH
-set -gx LD_LIBRARY_PATH ~/Packages/TensorRT-8.6.1.6/lib $LD_LIBRARY_PATH
 set -gx PKG_CONFIG_PATH /usr/local/lib/pkgconfig $PKG_CONFIG_PATH
 
 # NodeJS
@@ -97,15 +95,9 @@ set -gx OPENAI_API_KEY xxx $OPENAI_API_KEY
 # cuda lazy loading
 set -gx CUDA_MODULE_LOADING LAZY 
 
-# xset display
-# set -gx DISPLAY 0
-
-# set keyboard repeat speed if needed
+# change keyboard repeat speed if needed 
 # xset r rate 190 50
 # xset r rate 210 60
-
-# change Caps Lock to shift_L
-# xmodmap -e "keycode 66 = Shift_L"
 
 set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 if test -f $LOCAL_CONFIG
@@ -114,18 +106,3 @@ end
 
 # peco + ghq
 set -g GHQ_SELECTOR peco
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-if test -f /home/kalfazed/miniconda3/bin/conda
-    eval /home/kalfazed/miniconda3/bin/conda "shell.fish" "hook" $argv | source
-else
-    if test -f "/home/kalfazed/miniconda3/etc/fish/conf.d/conda.fish"
-        . "/home/kalfazed/miniconda3/etc/fish/conf.d/conda.fish"
-    else
-        set -x PATH "/home/kalfazed/miniconda3/bin" $PATH
-    end
-end
-# <<< conda initialize <<<
-
-conda activate fs-perc-dataset
