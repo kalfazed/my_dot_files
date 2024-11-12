@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-source ../hostname.sh
+source ${HOME}/.hostname.sh
 mkdir -p ~/.config/bash
 cp -r * ~/.config/bash
 sudo cp -r ./packages/bin/* /usr/local/bin

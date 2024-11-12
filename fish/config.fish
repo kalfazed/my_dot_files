@@ -58,7 +58,7 @@ alias pip    "python -m pip"
 alias wm     "wmctrl -r 'Alacritty' -b toggle,fullscreen"
 
 # additional alias for exa
-alias ll     "exa --icons --long --no-user --no-time --git"
+alias ll     "exa --icons --long --git"
 alias lla    "ll -a"
 
 # set customized neovim as default editor

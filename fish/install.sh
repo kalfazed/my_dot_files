@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-source ../hostname.sh
+source ~/.hostname.sh
 
 sudo apt-get install -y fish peco curl
 mkdir -p ~/.config/fish

@@ -8,9 +8,12 @@ fi
 # Set hostname (default $(whoami)
 hostname=$1
 echo "Hello ${hostname}"
-echo hostname=${hostname} >> hostname.sh
+rm ~/.hostname.sh
+echo hostname=${hostname} >> ~/.hostname.sh
 
-directories=("bash" "fish" "tmux" "peco" "lvim")
+sudo apt-get update
+
+directories=("bash" "fish" "tmux" "peco")
 
 for dir in "${directories[@]}"; do
     if [ -d "$dir" ] && [ -f "$dir/install.sh" ]; then
@@ -20,9 +23,3 @@ for dir in "${directories[@]}"; do
         echo "Skipping $dir: Directory or install.sh not found."
     fi
 done
-
-rm hostname.sh
-
-# Set default shell as fish
-chsh -s /usr/bin/fish
-

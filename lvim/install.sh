@@ -2,11 +2,12 @@
 # installs nvm (Node Version Manager)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
-bash # reload the bashrc to recognize nvm in bash
-cat nvm_config.fish >> ~/.config/fish/config.fish # added nvm config to recognize nvm in fish
-
 nvm install 22
 nvm use 22 # Active the latest version
+
+# fish shell need special care for nvm
+fish -c "fisher install jorgebucaran/nvm.fish"
+fish -c "set --universal nvm_default_version v22.11.0"
 
 # install latest cargo and rustc
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
