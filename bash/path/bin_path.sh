@@ -14,5 +14,4 @@ add_path() {
 # Modify your path here
 add_path /usr/local/bin
 add_path /usr/local/cuda/bin
-add_path ~/.local/bin
-add_path ~/.config/bash/packages/bin
+add_path /usr/src/tensorrt/bin

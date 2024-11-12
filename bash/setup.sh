@@ -21,7 +21,7 @@ source_files "$DIR/variables"
 source_files "$DIR/alias"
 source_files "$DIR/functions"
 source_files "$DIR/keymaps"
-#source_files "$DIR/path"
+source_files "$DIR/path"
 source_files "$DIR/packages"
 source_files "$DIR/packages/z"
 

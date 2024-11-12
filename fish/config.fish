@@ -77,6 +77,7 @@ set -gx PATH bin $PATH
 set -gx PATH ~/.local/bin $PATH
 set -gx PATH /usr/local/bin $PATH
 set -gx PATH /usr/local/cuda/bin $PATH
+set -gx PATH /usr/src/tensorrt/bin $PATH
 set -gx PATH ~/.cargo/bin $PATH
 set -gx LD_LIBRARY_PATH /usr/local/cuda/lib64 $LD_LIBRARY_PATH
 set -gx LD_LIBRARY_PATH /usr/local/lib $LD_LIBRARY_PATH
