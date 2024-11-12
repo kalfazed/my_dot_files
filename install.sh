@@ -10,8 +10,7 @@ hostname=$1
 echo "Hello ${hostname}"
 echo hostname=${hostname} >> hostname.sh
 
-# directories=("bash" "tmux" "peco" "lvim" "fish")
-directories=("bash" "tmux" "peco" "fish")
+directories=("bash" "fish" "tmux" "peco" "lvim")
 
 for dir in "${directories[@]}"; do
     if [ -d "$dir" ] && [ -f "$dir/install.sh" ]; then
