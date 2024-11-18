@@ -5,13 +5,11 @@
         *************************************************************
     */
     "window.titleBarStyle": "custom",
-    "window.menuBarVisibility": "toggle",
     "window.commandCenter": false,
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Community Material Theme Ocean",
-    "debug.console.fontSize": 13,
-    "scm.inputFontSize": 13,
-    "markdown.preview.fontSize": 13,
+    "debug.console.fontSize": 16,
+    "scm.inputFontSize": 16,
+    "markdown.preview.fontSize": 16,
     "zenMode.hideLineNumbers": false,
     "zenMode.centerLayout": false,
     "zenMode.hideStatusBar": false,
@@ -23,11 +21,11 @@
         *********************terminal related************************
         *************************************************************
     */
-    "terminal.integrated.gpuAcceleration": "off",
+    "terminal.integrated.gpuAcceleration": "on",
     "terminal.integrated.enableMultiLinePasteWarning": false,
     "terminal.integrated.fontFamily": "Hack Nerd Font",
     "terminal.integrated.fontWeight": "normal",
-    "terminal.integrated.fontSize": 13,
+    "terminal.integrated.fontSize": 18,
     "terminal.integrated.defaultProfile.linux": "fish",
     "terminal.integrated.defaultProfile.windows": "PowerShell",
     "terminal.integrated.profiles.linux": {
@@ -45,8 +43,8 @@
     */
     "editor.fontFamily": "Hack Nerd Font",
     "editor.fontWeight": "normal",
-    "editor.fontSize": 13,
-    "editor.lineHeight": 16,
+    "editor.fontSize": 18,
+    "editor.lineHeight": 21,
     "editor.renderLineHighlight": "all",
     "editor.cursorBlinking": "smooth",
     "editor.lineNumbers": "on",
@@ -129,5 +127,14 @@
     "breadcrumbs.enabled": false,
     "git.openRepositoryInParentFolders": "never",
     "workbench.startupEditor": "welcomePage",
-    "clock.dateFormat": "hh:MM:ss TT"
+    "clock.dateFormat": "hh:MM:ss TT",
+    "workbench.colorTheme": "Ayu Mirage",
+    "cmake.pinnedCommands": [
+        "workbench.action.tasks.configureTaskRunner",
+        "workbench.action.tasks.runTask"
+    ],
+    "workbench.editor.enablePreview": false,
+    "window.menuBarVisibility": "compact",
+    "workbench.layoutControl.enabled": false,
+    "editor.minimap.enabled": false,
 }
