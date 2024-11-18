@@ -56,8 +56,8 @@ alias dsort  "du -sh -- *  | sort -rh"
 alias lm     "df -hl -x tmpfs"
 alias pip    "python -m pip"
 alias wm     "wmctrl -r 'Alacritty' -b toggle,fullscreen"
-
-# additional alias for exa
+alias rs     "rsync -azh --info=progress2 --no-i-r" # copy to local
+alias rss    "rsync -azh --info=progress2 -e \"ssh -T -c aes128-ctr -o Compression=no -x\" --block-size=128K --inplace " # copy to remote
 alias ll     "exa --icons --long --git"
 alias lla    "ll -a"
 
@@ -77,7 +77,6 @@ set -gx PATH bin $PATH
 set -gx PATH ~/.local/bin $PATH
 set -gx PATH /usr/local/bin $PATH
 set -gx PATH /usr/local/cuda/bin $PATH
-set -gx PATH /usr/src/tensorrt/bin $PATH
 set -gx PATH ~/.cargo/bin $PATH
 set -gx LD_LIBRARY_PATH /usr/local/cuda/lib64 $LD_LIBRARY_PATH
 set -gx LD_LIBRARY_PATH /usr/local/lib $LD_LIBRARY_PATH
@@ -91,14 +90,17 @@ set -g GOPATH $HOME/go
 set -gx PATH $GOPATH/bin $PATH
 
 # Please modify your OpenAI API key here to enable ChatGPT
-set -gx OPENAI_API_KEY xxx $OPENAI_API_KEY
+set -gx OPENAI_API_KEY xxx 
+
+# Please modify your wandb API key here to enable Weights & Biases
+set -gx WANDB_API_KEY xxx 
 
 # cuda lazy loading
 set -gx CUDA_MODULE_LOADING LAZY 
 
-# change keyboard repeat speed if needed 
-# xset r rate 190 50
-# xset r rate 210 60
+# change the trackpoint speed
+xinput --set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Speed" 1.0 # Max sensitivity
+xinput --set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Profile Enabled" 1 0 #Set profile as "adaptive"
 
 set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 if test -f $LOCAL_CONFIG
