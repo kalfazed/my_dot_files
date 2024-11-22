@@ -100,8 +100,8 @@ set -gx WANDB_API_KEY xxx
 set -gx CUDA_MODULE_LOADING LAZY 
 
 # change the trackpoint speed
-xinput --set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Speed" 1.0 # Max sensitivity
-xinput --set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Profile Enabled" 1 0 #Set profile as "adaptive"
+# xinput --set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Speed" 1.0 # Max sensitivity
+# xinput --set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Profile Enabled" 1 0 #Set profile as "adaptive"
 
 set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 if test -f $LOCAL_CONFIG
