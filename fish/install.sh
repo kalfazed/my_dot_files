@@ -2,7 +2,7 @@
 
 source ~/.hostname.sh
 
-sudo apt-get install -y fish peco curl
+sudo apt-get install -y fish peco curl p7zip-full
 mkdir -p ~/.config/fish
 cp -r * ~/.config/fish
 sudo cp -r ./packages/bin/* /usr/local/bin
