@@ -38,33 +38,15 @@ function reset_json_matches
     end
 
     for file in $matches
-        # Verify it ends in .json
         if not string match -q "*.json" -- (basename $file)
             echo "Skipping non-JSON file: $file"
             continue
         end
 
-        # Validate it's actually a JSON array or empty
-        set content (cat $file 2>/dev/null)
-        if test -z "$content" -o "$content" = "[]" -o "$content" = "{}"
-            # Okay to reset
-            echo "[]" > $file
-        else
-            # Try to parse it using jq (if available)
-            if type -q jq
-                jq . $file > /dev/null 2>&1
-                if test $status -eq 0
-                    echo "[]" > $file
-                else
-                    echo "⚠️ Invalid JSON, skipping: $file"
-                end
-            else
-                echo "jq not available; cannot validate JSON: $file"
-                echo "Skipping: $file"
-            end
-        end
+        # Force reset regardless of file content
+        echo "[]" > $file
     end
 
-    echo "JSON files have been reset to empty array."
+    echo "JSON files have been force-reset to empty array."
 end
 
