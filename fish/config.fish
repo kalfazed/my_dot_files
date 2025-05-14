@@ -99,9 +99,13 @@ set -gx WANDB_API_KEY xxx
 # cuda lazy loading
 set -gx CUDA_MODULE_LOADING LAZY 
 
-# change the trackpoint speed
-# xinput --set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Speed" 1.0 # Max sensitivity
-# xinput --set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Profile Enabled" 1 0 #Set profile as "adaptive"
+# NCCL related
+export NCCL_DEBUG=WARN # Set into 'INFO' if want to show debug information
+export NCCL_IB_DISABLE=1
+export NCCL_P2P_LEVEL=SYS
+export NCCL_SOCKET_IFNAME=lo
+export NCCL_NVLS_ENABLE=0  # Disable NVLink SHARP/NVLS
+export NCCL_IGNORE_CPU_AFFINITY=1  # Avoid NCCL to bind to CPU cores
 
 set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 if test -f $LOCAL_CONFIG
