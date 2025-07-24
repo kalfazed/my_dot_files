@@ -35,7 +35,6 @@ require("lazy").setup({
         require'alpha'.setup(require'alpha.themes.startify'.config)
       end,
     },
-
     {
         'akinsho/toggleterm.nvim', 
         version = "*", 
@@ -44,5 +43,14 @@ require("lazy").setup({
           direction = 'float',
         },
     },
+    -- tokyonight color scheme
+    {
+      "folke/tokyonight.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {},
+    },
+    -- show tab buffer
+    {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'}
 })
 
