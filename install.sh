@@ -13,7 +13,7 @@ echo hostname=${hostname} >> ~/.hostname.sh
 
 sudo apt-get update
 
-directories=("bash" "fish" "tmux" "peco" "lvim")
+directories=("bash" "fish" "tmux" "peco" "lvim" "nvim")
 
 for dir in "${directories[@]}"; do
     if [ -d "$dir" ] && [ -f "$dir/install.sh" ]; then
