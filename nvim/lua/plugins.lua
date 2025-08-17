@@ -51,6 +51,42 @@ require("lazy").setup({
       opts = {},
     },
     -- show tab buffer
-    {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'}
+    {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
+    -- treesitter
+    {
+      "nvim-treesitter/nvim-treesitter",
+      build = ":TSUpdate",
+      config = function()
+        require("nvim-treesitter.configs").setup {
+          ensure_installed = { "c", "cpp", "lua", "python", "javascript", "html", "css" }, -- add your langs
+          highlight = { enable = true },
+          indent = { enable = true }, -- optional
+        }
+      end,
+    },
+    -- lsp
+      -- LSP manager
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+          "williamboman/mason.nvim",           -- LSP/DAP/Linter/Formatter installer
+          "williamboman/mason-lspconfig.nvim", -- Bridge between mason & lspconfig
+        },
+        config = function()
+          require("mason").setup()
+          require("mason-lspconfig").setup()
+
+          local lspconfig = require("lspconfig")
+
+          -- Example: Enable some LSP servers
+          local servers = { "pyright", "clangd"}
+          for _, lsp in ipairs(servers) do
+            lspconfig[lsp].setup {}
+          end
+        end,
+    },
+    {
+        "github/copilot.vim",
+    },
 })
 
