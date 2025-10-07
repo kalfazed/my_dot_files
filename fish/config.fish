@@ -17,7 +17,7 @@ export LSCOLORS=gxfxcxdxbxegedabagacad
 set fish_greeting "welcome back!!"
 
 # color setting
-set -gx TERM xterm-256color
+set -gx TERM screen-256color
 
 # Global color variables
 set -g RED (set_color red)
