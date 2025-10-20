@@ -61,10 +61,11 @@ alias rs     "rsync -azh --info=progress2 --no-i-r" # copy to local
 alias rss    "rsync -azh --info=progress2 -e \"ssh -T -c aes128-ctr -o Compression=no -x\" --block-size=128K --inplace " # copy to remote
 alias ll     "exa --icons --long --git"
 alias lla    "ll -a"
+alias vim    "lvim"
 
 # set customized neovim as default editor
-command -qv lvim && alias vim lvim
-set -gx EDITOR lvim
+# command -qv lvim && alias vim lvim
+# set -gx EDITOR lvim
 
 # combine cd and ls together
 functions --copy cd standard_cd
