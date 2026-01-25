@@ -1,9 +1,9 @@
 #!/usr/bin/env fish
 
-function mv_data_from_list_help
-    echo "Usage: mv_data_from_list <LIST_FILE> <TARGET_DIR>"
+function cp_data_from_list_help
+    echo "Usage: cp_data_from_list <LIST_FILE> <TARGET_DIR>"
     echo ""
-    echo "Move directories listed in a file."
+    echo "Copy directories listed in a file."
     echo ""
     echo "Arguments:"
     echo "  LIST_FILE   Text file containing the names of directories to remove."
@@ -14,10 +14,10 @@ function mv_data_from_list_help
     echo "  -h, --help  Show this help message and exit."
     echo ""
     echo "Example:"
-    echo "  mv_data_from_list cleanup_list.txt /var/www/html"
+    echo "  cp_data_from_list cleanup_list.txt /var/www/html"
 end
 
-function mv_data_from_list
+function cp_data_from_list
     # Color definitions for better output
     set -l RED (set_color red)
     set -l GREEN (set_color green)
@@ -27,14 +27,14 @@ function mv_data_from_list
 
     # 1. Check for help arguments
     if contains -- -h $argv; or contains -- --help $argv
-        mv_data_from_list_help
+        cp_data_from_list_help
         return 0
     end
 
     # 2. Check for correct argument count
     if test (count $argv) -ne 2
         echo $RED"Error: Missing arguments."$CLEAR
-        mv_data_from_list_help
+        cp_data_from_list_help
         return 1
     end
 
@@ -90,13 +90,13 @@ function mv_data_from_list
 
     # 5. Check if we found anything to delete
     if test (count $paths_to_remove) -eq 0
-        echo $YELLOW"No valid directories found to mv."$CLEAR
+        echo $YELLOW"No valid directories found to copy."$CLEAR
         return 0
     end
 
     # 6. Show summary and ask for confirmation
     echo ""
-    echo $RED$BOLD"The following directories will be move:"$CLEAR
+    echo $RED$BOLD"The following directories will be copied:"$CLEAR
     echo "----------------------------------------------------"
     for p in $paths_to_remove
         echo "$p" -> "$target_base_dir"
@@ -109,7 +109,7 @@ function mv_data_from_list
         echo ""
         for dir in $paths_to_remove
             echo "Moving: $dir to $target_base_dir"
-            mv "$dir" "$target_base_dir"
+            cp -r "$dir" "$target_base_dir"
         end
         echo $GREEN"Done."$CLEAR
     else
