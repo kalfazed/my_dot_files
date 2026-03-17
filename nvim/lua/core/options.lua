@@ -25,5 +25,8 @@ opt.ignorecase = true
 opt.smartcase = true
 
 -- appearance
--- opt.termguicolors = true
+opt.termguicolors = true
 opt.signcolumn = "yes"
+
+-- undo persistent
+opt.undofile = true
