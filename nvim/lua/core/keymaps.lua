@@ -38,3 +38,19 @@ keymap.set('n', '<leader>st', function() require('telescope.builtin').live_grep(
 keymap.set('n', '<leader>sr', function() require('telescope.builtin').oldfiles()   end, { desc = 'Telescope recent files' })
 keymap.set('n', '<leader>sb', function() require('telescope.builtin').buffers()    end, { desc = 'Telescope buffers' })
 keymap.set('n', '<leader>sh', function() require('telescope.builtin').help_tags()  end, { desc = 'Telescope help tags' })
+
+-- lsp
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'LSP keybindings',
+  callback = function(event)
+    local opts = {buffer = event.buf, remap = false}
+
+    vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+    
+    vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
+    vim.keymap.set('n', 'gr', function() vim.lsp.buf.references() end, opts)
+    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
+    vim.keymap.set('n', '<leader>rn', function() vim.lsp.buf.rename() end, opts)
+    vim.keymap.set('n', '<leader>ca', function() vim.lsp.buf.code_action() end, opts)
+  end,
+})

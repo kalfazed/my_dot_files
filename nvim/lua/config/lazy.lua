@@ -26,7 +26,8 @@ require("lazy").setup({
   spec = {
     -- import your plugins
     { import = "plugins" },
-    { "yetone/avante.nvim", enabled = false } -- disable this one
+    { "yetone/avante.nvim", enabled = false }, -- disable this one
+    { "lewis6991/gitsigns.nvim", enabled = false }, -- disable this one
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
