@@ -61,7 +61,7 @@ alias rs     "rsync -azh --info=progress2 --no-i-r" # copy to local
 alias rss    "rsync -azh --info=progress2 -e \"ssh -T -c aes128-ctr -o Compression=no -x\" --block-size=128K --inplace " # copy to remote
 alias ll     "exa --icons --long --git"
 alias lla    "ll -a"
-alias vim    "lvim"
+alias vim    "nvim"
 
 # set customized neovim as default editor
 # command -qv lvim && alias vim lvim
@@ -80,6 +80,8 @@ set -gx PATH ~/.local/bin $PATH
 set -gx PATH /usr/local/bin $PATH
 set -gx PATH /usr/local/cuda/bin $PATH
 set -gx PATH ~/.cargo/bin $PATH
+set -gx /opt/nvim-linux-x86_64/bin $PATH
+
 set -gx LD_LIBRARY_PATH /usr/local/cuda/lib64 $LD_LIBRARY_PATH
 set -gx LD_LIBRARY_PATH /usr/local/lib $LD_LIBRARY_PATH
 set -gx PKG_CONFIG_PATH /usr/local/lib/pkgconfig $PKG_CONFIG_PATH
