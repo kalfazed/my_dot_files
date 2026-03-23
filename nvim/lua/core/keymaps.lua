@@ -30,6 +30,9 @@ keymap.set("n", "L", ":BufferLineCycleNext<CR>", { desc = "Next buffer" })
 keymap.set("n", "H", ":BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
 
 -- ------------------ Telescope (abstract search) ------------------ --
+
+-- ------------------ Keymap List ------------------ --
+keymap.set('n', '<leader>?', ':map<CR>', { desc = 'Show mapped keys' })
 keymap.set('n', '<leader>sf', function() require('telescope.builtin').find_files() end, { desc = 'Telescope find files' })
 keymap.set('n', '<leader>st', function() require('telescope.builtin').live_grep()  end, { desc = 'Telescope live grep' })
 keymap.set('n', '<leader>sr', function() require('telescope.builtin').oldfiles()   end, { desc = 'Telescope recent files' })
