@@ -11,6 +11,10 @@ echo "Hello ${hostname}"
 rm ~/.hostname.sh
 echo hostname=${hostname} >> ~/.hostname.sh
 
+# ask for the sudo password upfront and keep it cached for the whole script
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done 2>/dev/null &
+
 sudo apt-get update
 
 directories=("bash" "fish" "tmux" "peco" "nvim")
