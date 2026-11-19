@@ -50,6 +50,17 @@ opt.smartcase = true
 -- appearance
 opt.termguicolors = true
 opt.signcolumn = "yes"
+-- 隐藏文件末尾的 ~，并使用粗分割线（透明背景下更清晰）
+opt.fillchars = {
+  eob = " ",
+  vert = "┃",
+  horiz = "━",
+  horizup = "┻",
+  horizdown = "┳",
+  vertleft = "┫",
+  vertright = "┣",
+  verthoriz = "╋",
+}
 
 -- undo persistent
 opt.undofile = true

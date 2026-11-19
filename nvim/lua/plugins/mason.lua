@@ -69,6 +69,26 @@ return {
             autoSearchPaths = true,
             useLibraryCodeForTypes = true, -- 没有类型存根的库也能跳到源码
             diagnosticMode = "openFilesOnly", -- 大项目里只分析打开的文件，更快
+            -- 默认 standard 模式对研究/数据处理代码太严格，满屏红色 E
+            -- basic: 只保留比较有价值的检查
+            typeCheckingMode = "basic",
+            -- 类型相关的问题降为警告（黄色 W），真正的错误（语法错误、未定义变量等）仍是红色 E
+            diagnosticSeverityOverrides = {
+              reportMissingImports = "warning", -- 当前 python 环境里没装这个库
+              reportMissingModuleSource = "none", -- 有类型存根但没装源码，不影响使用
+              reportOptionalSubscript = "warning",
+              reportOptionalMemberAccess = "warning",
+              reportOptionalIterable = "warning",
+              reportOptionalCall = "warning",
+              reportOptionalOperand = "warning",
+              reportArgumentType = "warning",
+              reportAttributeAccessIssue = "warning",
+              reportCallIssue = "warning",
+              reportIndexIssue = "warning",
+              reportPossiblyUnbound = "warning",
+              reportAssignmentType = "warning",
+              reportReturnType = "warning",
+            },
           },
         },
       },
@@ -89,6 +109,19 @@ return {
     vim.diagnostic.config({
       severity_sort = true,
       float = { border = "rounded", source = true },
+      -- 只在光标所在行显示错误信息，其余行只显示左侧图标
+      virtual_text = { current_line = true, spacing = 2, prefix = "●" },
+      underline = true,
+      signs = {
+        -- hint（如未使用的变量）不在左侧显示图标，只做灰色淡化
+        severity = { min = vim.diagnostic.severity.INFO },
+        text = {
+          [vim.diagnostic.severity.ERROR] = "󰅙",
+          [vim.diagnostic.severity.WARN] = "󰀦",
+          [vim.diagnostic.severity.INFO] = "󰋼",
+          [vim.diagnostic.severity.HINT] = "󰌵",
+        },
+      },
     })
   end,
 }

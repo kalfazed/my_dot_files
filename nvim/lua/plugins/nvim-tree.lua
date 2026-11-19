@@ -60,6 +60,13 @@ return {
         -- 树顶部显示根目录路径（相对 ~）
         root_folder_label = ":~:s?$?/..?",
         highlight_opened_files = "name",
+        -- 缩进参考线，层级关系一目了然
+        indent_markers = { enable = true },
+      },
+      view = {
+        width = 32,
+        cursorline = true,
+        signcolumn = "no",
       },
     })
 
