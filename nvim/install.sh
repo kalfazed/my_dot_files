@@ -4,6 +4,11 @@ set -e
 
 cd "$(dirname "$0")"
 
+# Node.js major version (needed by Copilot and pyright; nvim itself works without it).
+# Pin the major version, not the exact patch: security fixes still arrive via apt / brew.
+# Bump this when the version reaches end-of-life: https://nodejs.org/en/about/previous-releases
+NODE_MAJOR=24
+
 install_macos() {
     if ! command -v brew >/dev/null 2>&1; then
         echo "Homebrew is required on macOS: https://brew.sh" >&2
@@ -15,8 +20,12 @@ install_macos() {
         exit 1
     fi
 
-    # neovim, node (copilot / LSP servers), python tools
-    brew install neovim node codespell flake8 black isort
+    # neovim, python tools
+    brew install neovim codespell flake8 black isort
+
+    # Node.js (pinned major version; node@N is keg-only, so link it onto PATH)
+    brew install "node@${NODE_MAJOR}"
+    brew link --overwrite --force "node@${NODE_MAJOR}"
 
     # deploy nvim config
     mkdir -p ~/.config/nvim
@@ -31,14 +40,19 @@ install_linux() {
     sudo -v
     while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done 2>/dev/null &
 
-    # installs nvm (Node Version Manager)
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-    nvm install 22
-    nvm use 22 # Active the latest version
+    # Node.js from NodeSource, installed system-wide to /usr/bin/node so nvim finds
+    # the same version no matter which shell / environment it is started from.
+    # Ubuntu's own nodejs package is far too old (e.g. v12 on 22.04) and is replaced.
+    current_major=$(node --version 2>/dev/null | sed -E 's/^v([0-9]+).*/\1/')
+    if [ "${current_major:-0}" != "$NODE_MAJOR" ] || [ "$(command -v node)" != "/usr/bin/node" ]; then
+        # remove Ubuntu's node packages first; they conflict with NodeSource's nodejs
+        old_pkgs=$(dpkg-query -W -f='${binary:Package} ${Status}\n' nodejs npm libnode-dev 'libnode[0-9]*' 2>/dev/null \
+            | awk '/install ok installed/ {print $1}')
+        [ -n "$old_pkgs" ] && sudo apt-get remove -y $old_pkgs
+        curl -fsSL "https://deb.nodesource.com/setup_${NODE_MAJOR}.x" | sudo -E bash -
+        sudo apt-get install -y nodejs
+    fi
+    echo "Node.js: $(/usr/bin/node --version)"
 
     # install latest cargo and rustc
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y

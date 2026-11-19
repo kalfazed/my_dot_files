@@ -9,9 +9,27 @@ return {
     -- 1. Mason 下载和管理 LSP 二进制
     require("mason").setup()
 
-    -- 2. mason-lspconfig: 确保 clangd / pyright 已安装，并自动 vim.lsp.enable 已安装的 server
+    -- pyright 是 Node.js 程序（Mason 安装它也需要 npm）。没有 node 时跳过它，
+    -- 避免反复出现 "pyright quit with exit code 127" 之类的报错；clangd 不依赖 node。
+    local has_node = vim.fn.executable("node") == 1
+    local servers = { "clangd" }
+    if has_node then
+      table.insert(servers, "pyright")
+    else
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "python",
+        once = true,
+        callback = function()
+          vim.notify("Node.js not found: pyright (Python LSP) is disabled", vim.log.levels.WARN)
+        end,
+      })
+    end
+
+    -- 2. mason-lspconfig: 确保需要的 server 已安装
+    --    automatic_enable 关掉，由下面的 vim.lsp.enable(servers) 统一控制启用哪些
     require("mason-lspconfig").setup({
-      ensure_installed = { "clangd", "pyright" },
+      ensure_installed = servers,
+      automatic_enable = false,
     })
 
     -- 3. 为所有 LSP 注入 nvim-cmp 的补全能力
@@ -102,8 +120,7 @@ return {
       end,
     })
 
-    -- mason-lspconfig 已经会自动 enable，这里显式写一下更直观（重复 enable 无副作用）
-    vim.lsp.enable({ "clangd", "pyright" })
+    vim.lsp.enable(servers)
 
     -- 6. 诊断显示
     vim.diagnostic.config({

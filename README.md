@@ -28,6 +28,10 @@ Install everything with one command, or only the modules you want:
 Works on **Ubuntu** (apt) and **macOS** ([Homebrew](https://brew.sh) required; for nvim also
 Xcode Command Line Tools: `xcode-select --install`). On macOS, `exa` is replaced by its maintained fork `eza`.
 
+Node.js is only needed by nvim (Copilot and the Python LSP `pyright`); the `nvim` module installs it
+(major version pinned by `NODE_MAJOR` in `nvim/install.sh`). Without Node.js, nvim still works and simply
+skips Copilot and pyright.
+
 `-n HOSTNAME` sets the name shown in the bash/fish prompt (saved to `~/.hostname.sh`).
 If omitted, the existing one is kept (or `$(whoami)` on the first install).
 
