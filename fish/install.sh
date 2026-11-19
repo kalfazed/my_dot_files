@@ -1,11 +1,21 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
+cd "$(dirname "$0")"
 source ~/.hostname.sh
 
-sudo apt-get install -y fish peco curl p7zip-full
+if [ "$(uname -s)" = "Darwin" ]; then
+    # packages/bin contains Linux binaries; use Homebrew on macOS instead (eza: maintained fork of exa)
+    brew install fish peco curl p7zip eza ghq rsync
+else
+    sudo apt-get install -y fish peco curl p7zip-full
+fi
+
 mkdir -p ~/.config/fish
 cp -r * ~/.config/fish
-sudo cp -r ./packages/bin/* /usr/local/bin
+
+if [ "$(uname -s)" != "Darwin" ]; then
+    sudo cp -r ./packages/bin/* /usr/local/bin
+fi
 
 echo "SETUVAR HOST:['${hostname}']" >> ~/.config/fish/fish_variables
 

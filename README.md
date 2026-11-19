@@ -25,6 +25,9 @@ Install everything with one command, or only the modules you want:
 ./install.sh -l                 # list available modules
 ./install.sh -h                 # show help
 ```
+Works on **Ubuntu** (apt) and **macOS** ([Homebrew](https://brew.sh) required; for nvim also
+Xcode Command Line Tools: `xcode-select --install`). On macOS, `exa` is replaced by its maintained fork `eza`.
+
 `-n HOSTNAME` sets the name shown in the bash/fish prompt (saved to `~/.hostname.sh`).
 If omitted, the existing one is kept (or `$(whoami)` on the first install).
 

@@ -42,10 +42,30 @@ set -g theme_display_user yes
 set -g theme_hostname always
 
 
+# Homebrew (macOS): put brew-installed tools (eza, peco, nvim, ...) on PATH
+if test -x /opt/homebrew/bin/brew
+  /opt/homebrew/bin/brew shellenv | source
+else if test -x /usr/local/bin/brew
+  /usr/local/bin/brew shellenv | source
+end
+
 # aliases
-alias ls     "ls -p -G"
+if test (uname -s) = Darwin
+  alias ls     "ls -p -G"
+  alias sleep  "pmset sleepnow"
+  alias lm     "df -hl"
+else
+  alias ls     "ls -p -G"
+  alias sleep  "sudo systemctl suspend"
+  alias lm     "df -hl -x tmpfs"
+end
+# eza is the maintained fork of exa (Homebrew only ships eza)
+if command -q eza
+  alias ll   "eza --icons --long --git"
+else
+  alias ll   "exa --icons --long --git"
+end
 alias la     "ls -A"
-alias sleep  "sudo systemctl suspend"
 alias ncu    "sudo /usr/local/cuda/bin/ncu"
 alias bmake  "bear -- make -j64"
 alias make   "make -j64"
@@ -54,12 +74,10 @@ alias obs    "flatpak run com.obsproject.Studio"
 alias gt     "git log --graph --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Creset%x09 %C(cyan ul)%an%Creset %x09%C(auto)%s %d'"
 alias gm     "git commit -m"
 alias dsort  "du -sh -- *  | sort -rh"
-alias lm     "df -hl -x tmpfs"
 alias pip    "python -m pip"
 alias wm     "wmctrl -r 'Alacritty' -b toggle,fullscreen"
 alias rs     "rsync -azh --info=progress2 --no-i-r" # copy to local
 alias rss    "rsync -azh --info=progress2 -e \"ssh -T -c aes128-ctr -o Compression=no -x\" --block-size=128K --inplace " # copy to remote
-alias ll     "exa --icons --long --git"
 alias lla    "ll -a"
 alias vim    "nvim"
 

@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 #
 # Install dotfiles. Installs every module by default, or only the ones given.
 #
@@ -11,7 +11,9 @@
 # all modules, in install order
 MODULES=("bash" "fish" "tmux" "peco" "nvim")
 
-cd "$(dirname "$(readlink -f "$0")")" || exit 1
+cd "$(dirname "$0")" || exit 1
+
+OS="$(uname -s)"   # Linux / Darwin
 
 usage() {
     cat <<EOF
@@ -80,11 +82,19 @@ elif [ ! -f ~/.hostname.sh ]; then
 fi
 echo "Hello $(sed -n 's/^hostname=//p' ~/.hostname.sh)"
 
-# ---------- sudo: ask once and keep it cached for the whole script ----------
-sudo -v || exit 1
-while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done 2>/dev/null &
-
-sudo apt-get update
+# ---------- package manager ----------
+if [ "$OS" = "Darwin" ]; then
+    if ! command -v brew >/dev/null 2>&1; then
+        echo "Error: Homebrew is required on macOS: https://brew.sh" >&2
+        exit 1
+    fi
+    brew update
+else
+    # ask for the sudo password once and keep it cached for the whole script
+    sudo -v || exit 1
+    while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done 2>/dev/null &
+    sudo apt-get update
+fi
 
 # ---------- install ----------
 succeeded=()

@@ -3,6 +3,13 @@
 # Set greeting
 echo "welcome back!!"
 
+# Homebrew (macOS): put brew-installed tools (bash, eza, peco, ...) on PATH
+if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 # Get current directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 

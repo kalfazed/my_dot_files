@@ -1,2 +1,4 @@
-# sync clipboard
-set-option -g default-command "which reattach-to-user-namespace > /dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
+# macOS specific settings
+# Note: reattach-to-user-namespace is no longer needed since tmux 2.6, and
+# overriding default-command would start $SHELL (zsh) instead of fish.
+# Clipboard works via tmux-yank (pbcopy) and OSC 52 (set-clipboard on).
