@@ -18,11 +18,42 @@ opt.cursorline = true
 opt.mouse:append("a")
 
 -- system clipboard
--- Over SSH, the X11-forwarded clipboard (xsel/xclip) is slow (~0.5s per call)
--- and can hang nvim completely when the forwarding is broken. Use OSC 52
--- instead: copy goes to the local terminal's clipboard; paste uses nvim's own
--- registers (use your terminal's paste, e.g. Ctrl+Shift+V, for outside text).
-if vim.env.SSH_TTY or vim.env.SSH_CONNECTION then
+-- 1) 在 tmux 里：把内容交给 tmux（load-buffer -w），tmux 再通过 OSC 52 转发给
+--    当前连接的终端（比如 ssh 过来的 MacBook）。需要 tmux 里 `set -s set-clipboard on`。
+--    如果是在台式机本地的图形界面里（DISPLAY=:N），同时写入本机的 X 剪贴板。
+-- 2) 不在 tmux、但在 SSH 里：直接用 OSC 52。
+--    （X11 转发的 xsel/xclip 每次约 0.5s，转发断开时还会卡死 nvim，所以不用）
+-- 粘贴：从 tmux buffer / nvim 寄存器取；外部复制的内容请用终端的粘贴键（Cmd+V）。
+if vim.env.TMUX and vim.env.TMUX ~= "" then
+  local last = { text = nil, regtype = "v" }
+  local function copy(lines, regtype)
+    local text = table.concat(lines, "\n")
+    if regtype == "V" then
+      text = text .. "\n"
+    end
+    last.text, last.regtype = text, regtype
+    vim.system({ "tmux", "load-buffer", "-w", "-" }, { stdin = text })
+    local display = vim.env.DISPLAY
+    if display and display:match("^:") and vim.fn.executable("xsel") == 1 then
+      vim.system({ "xsel", "-ib" }, { stdin = text })
+    end
+  end
+  local function paste()
+    local res = vim.system({ "tmux", "save-buffer", "-" }, { text = true }):wait(1000)
+    local text = (res and res.code == 0) and res.stdout or ""
+    local regtype = (text == last.text) and last.regtype or "v"
+    if regtype == "V" then
+      text = text:gsub("\n$", "")
+    end
+    return { vim.split(text, "\n", { plain = true }), regtype }
+  end
+  vim.g.clipboard = {
+    name = "tmux (OSC 52)",
+    copy = { ["+"] = copy, ["*"] = copy },
+    paste = { ["+"] = paste, ["*"] = paste },
+    cache_enabled = false,
+  }
+elseif vim.env.SSH_TTY or vim.env.SSH_CONNECTION then
   local function paste()
     return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
   end
