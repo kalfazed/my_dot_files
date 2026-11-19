@@ -7,6 +7,10 @@
 #   ./install.sh bash fish            # install bash and fish
 #   ./install.sh -n DESKTOP nvim tmux # set prompt hostname, install nvim and tmux
 #   ./install.sh -l                   # list available modules
+#   ./install.sh -f nvim              # reinstall nvim even if already installed
+#
+# Packages / tools that are already installed are skipped, and `apt-get update` /
+# `brew update` only runs (once) when something actually needs to be installed.
 
 # all modules, in install order
 MODULES=("bash" "fish" "tmux" "peco" "nvim")
@@ -17,13 +21,15 @@ OS="$(uname -s)"   # Linux / Darwin
 
 usage() {
     cat <<EOF
-Usage: ./install.sh [-n HOSTNAME] [-l] [-h] [MODULE...]
+Usage: ./install.sh [-n HOSTNAME] [-f] [-l] [-h] [MODULE...]
 
 Install all modules by default, or only the given MODULEs.
+Already installed packages are skipped (use -f to reinstall them).
 
 Options:
   -n HOSTNAME   name shown in the bash/fish prompt (saved to ~/.hostname.sh)
                 default: keep the existing one, or \$(whoami) on first install
+  -f            force: reinstall packages even if already installed
   -l            list available modules
   -h            show this help
 
@@ -34,13 +40,16 @@ Examples:
   ./install.sh bash             # install bash only
   ./install.sh bash fish        # install bash and fish
   ./install.sh -n DESKTOP nvim  # set prompt hostname, install nvim only
+  ./install.sh -f tmux          # reinstall tmux
 EOF
 }
 
 hostname=""
-while getopts ":n:lh" opt; do
+force=0
+while getopts ":n:flh" opt; do
     case "$opt" in
         n) hostname="$OPTARG" ;;
+        f) force=1 ;;
         l) printf '%s\n' "${MODULES[@]}"; exit 0 ;;
         h) usage; exit 0 ;;
         :) echo "Error: -$OPTARG requires an argument" >&2; usage >&2; exit 1 ;;
@@ -88,13 +97,20 @@ if [ "$OS" = "Darwin" ]; then
         echo "Error: Homebrew is required on macOS: https://brew.sh" >&2
         exit 1
     fi
-    brew update
 else
     # ask for the sudo password once and keep it cached for the whole script
     sudo -v || exit 1
-    while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done 2>/dev/null &
-    sudo apt-get update
+    while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done >/dev/null 2>&1 &
+    sudo_keepalive_pid=$!
 fi
+
+# shared with the module scripts (see lib/pkg.sh):
+#   - run `apt-get update` / `brew update` at most once, and only if something must be installed
+#   - -f forces reinstalling
+export DOTFILES_UPDATE_STAMP
+DOTFILES_UPDATE_STAMP="$(mktemp -u "${TMPDIR:-/tmp}/dotfiles-updated.XXXXXX")"
+trap 'rm -f "$DOTFILES_UPDATE_STAMP"; [ -n "${sudo_keepalive_pid:-}" ] && kill "$sudo_keepalive_pid" 2>/dev/null' EXIT
+export DOTFILES_FORCE="$force"
 
 # ---------- install ----------
 succeeded=()

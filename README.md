@@ -23,6 +23,7 @@ Install everything with one command, or only the modules you want:
 ./install.sh bash fish          # install bash and fish
 ./install.sh -n DESKTOP nvim    # set the prompt hostname, then install nvim
 ./install.sh -l                 # list available modules
+./install.sh -f nvim            # force reinstall, even if already installed
 ./install.sh -h                 # show help
 ```
 Works on **Ubuntu** (apt) and **macOS** ([Homebrew](https://brew.sh) required; for nvim also
@@ -31,6 +32,9 @@ Xcode Command Line Tools: `xcode-select --install`). On macOS, `exa` is replaced
 Node.js is only needed by nvim (Copilot and the Python LSP `pyright`); the `nvim` module installs it
 (major version pinned by `NODE_MAJOR` in `nvim/install.sh`). Without Node.js, nvim still works and simply
 skips Copilot and pyright.
+
+Re-running is fast: packages and tools that are already installed (with a new enough version) are
+skipped, and `apt-get update` / `brew update` only runs once, when something actually needs installing.
 
 `-n HOSTNAME` sets the name shown in the bash/fish prompt (saved to `~/.hostname.sh`).
 If omitted, the existing one is kept (or `$(whoami)` on the first install).

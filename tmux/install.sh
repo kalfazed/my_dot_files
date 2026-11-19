@@ -2,20 +2,13 @@
 set -e
 
 cd "$(dirname "$0")"
+source ../lib/pkg.sh
 
-# install tmux
-case "$(uname -s)" in
-    Darwin)
-        if ! command -v brew >/dev/null 2>&1; then
-            echo "Homebrew is required on macOS: https://brew.sh" >&2
-            exit 1
-        fi
-        brew install tmux
-        ;;
-    Linux)
-        sudo apt-get -y install tmux
-        ;;
-esac
+if [ "$PKG_OS" = "Darwin" ] && ! have brew; then
+    echo "Homebrew is required on macOS: https://brew.sh" >&2
+    exit 1
+fi
+pkg_install tmux
 
 # config files
 cp .tmux.conf .tmux.conf.osx .tmux.powerline.conf ~/
@@ -26,6 +19,9 @@ cp scripts/*.sh ~/.tmux/scripts/
 chmod +x ~/.tmux/scripts/*.sh
 
 # TPM (tmux plugin manager); press prefix + I inside tmux to install plugins
-if [ ! -d ~/.tmux/plugins/tpm ]; then
+if [ -d ~/.tmux/plugins/tpm ] && ! forced; then
+    skip "tpm"
+else
+    rm -rf ~/.tmux/plugins/tpm
     git clone --depth 1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
