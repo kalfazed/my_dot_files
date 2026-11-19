@@ -18,7 +18,30 @@ opt.cursorline = true
 opt.mouse:append("a")
 
 -- system clipboard
-opt.clipboard:append("unnamedplus")
+-- Over SSH, the X11-forwarded clipboard (xsel/xclip) is slow (~0.5s per call)
+-- and can hang nvim completely when the forwarding is broken. Use OSC 52
+-- instead: copy goes to the local terminal's clipboard; paste uses nvim's own
+-- registers (use your terminal's paste, e.g. Ctrl+Shift+V, for outside text).
+if vim.env.SSH_TTY or vim.env.SSH_CONNECTION then
+  local function paste()
+    return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+  end
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = { ["+"] = paste, ["*"] = paste },
+  }
+end
+-- set clipboard after startup so a slow provider never blocks startup
+vim.schedule(function()
+  vim.opt.clipboard:append("unnamedplus")
+end)
+
+-- faster CursorHold / swap write
+opt.updatetime = 250
 
 -- search
 opt.ignorecase = true

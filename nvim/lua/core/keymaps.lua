@@ -11,6 +11,11 @@ keymap.set("n", "<leader>sh", "<C-w>s") -- Split window horizontal
 keymap.set("n", "<leader>q", ":q<CR>")  -- quit window
 keymap.set("n", "<leader>w", ":w<CR>")  -- save
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>") -- Toggle nvim-tree
+keymap.set("n", "<leader>E", ":NvimTreeFindFile<CR>", { desc = "Reveal current file in nvim-tree" })
+keymap.set("n", "<leader>fp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p"))
+  vim.notify("Copied: " .. vim.fn.expand("%:p"))
+end, { desc = "Copy current file's absolute path" })
 
 -- Comment.lua --
 keymap.set('n', '<leader>/', 
@@ -40,17 +45,35 @@ keymap.set('n', '<leader>sb', function() require('telescope.builtin').buffers() 
 keymap.set('n', '<leader>sh', function() require('telescope.builtin').help_tags()  end, { desc = 'Telescope help tags' })
 
 -- lsp
+-- 有多个结果时弹出 telescope 选择，只有一个结果时直接跳转；用 <C-o> 跳回
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP keybindings',
   callback = function(event)
-    local opts = {buffer = event.buf, remap = false}
+    local function map(lhs, rhs, desc)
+      vim.keymap.set('n', lhs, rhs, { buffer = event.buf, desc = desc })
+    end
+    local tb = function(name)
+      return function() require('telescope.builtin')[name]({ reuse_win = true }) end
+    end
 
-    vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
-    
-    vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
-    vim.keymap.set('n', 'gr', function() vim.lsp.buf.references() end, opts)
-    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
-    vim.keymap.set('n', '<leader>rn', function() vim.lsp.buf.rename() end, opts)
-    vim.keymap.set('n', '<leader>ca', function() vim.lsp.buf.code_action() end, opts)
+    map('gd', tb('lsp_definitions'), 'Goto definition')
+    map('gD', vim.lsp.buf.declaration, 'Goto declaration')
+    map('gr', tb('lsp_references'), 'Goto references')
+    map('gi', tb('lsp_implementations'), 'Goto implementation')
+    map('gy', tb('lsp_type_definitions'), 'Goto type definition')
+    map('K', function() vim.lsp.buf.hover({ border = 'rounded' }) end, 'Hover')
+    map('<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
+    map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
+    map('<leader>ds', tb('lsp_document_symbols'), 'Document symbols')
+    map('<leader>ws', tb('lsp_dynamic_workspace_symbols'), 'Workspace symbols')
+    map('<leader>d', vim.diagnostic.open_float, 'Line diagnostics')
+    map('[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, 'Prev diagnostic')
+    map(']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, 'Next diagnostic')
+
+    -- C/C++: 头文件 / 源文件切换
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client and client.name == 'clangd' then
+      map('gs', '<cmd>LspClangdSwitchSourceHeader<CR>', 'Switch source/header')
+    end
   end,
 })
