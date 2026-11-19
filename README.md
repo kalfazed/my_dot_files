@@ -16,6 +16,18 @@ commonly used in programming, development, and computing in general. There are a
 
 
 ## Intallation
+Install everything with one command, or only the modules you want:
+```shell
+./install.sh                    # install all modules (bash fish tmux peco nvim)
+./install.sh bash               # install bash only
+./install.sh bash fish          # install bash and fish
+./install.sh -n DESKTOP nvim    # set the prompt hostname, then install nvim
+./install.sh -l                 # list available modules
+./install.sh -h                 # show help
+```
+`-n HOSTNAME` sets the name shown in the bash/fish prompt (saved to `~/.hostname.sh`).
+If omitted, the existing one is kept (or `$(whoami)` on the first install).
+
 Here are some highlights and installation for each item:
 ## bash
 ```shell
